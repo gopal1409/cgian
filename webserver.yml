@@ -1,0 +1,21 @@
+---
+- name: This sets up an httpd webserver
+  hosts: centos2
+  tasks:
+  - name: Install apache packages 
+    package:
+      name: httpd
+      state: present
+  - name: ensure httpd is running
+    service:
+      name: httpd
+      state: started
+  - name: open port 80 for httpd access
+    firewalld:
+      service: http
+      permanent: yes
+      state: enabled
+  - name: restart firewalld
+    service:
+      name: firewalld
+      state: restarted
